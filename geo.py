@@ -47,8 +47,6 @@ longitude = verify("Sua Longitude",float)
 radious=verify("Raio de procura em km",float)*1000
 categorias = inCategorie(verify("Categorias",str),all_categories)
 
-
-
 pois_proximos = get_pois(latitude, longitude, api_key, categorias,radious)
 
 

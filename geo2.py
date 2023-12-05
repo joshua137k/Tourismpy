@@ -22,10 +22,7 @@ def remover_da_lista(event):
 
 def atualizar_sugestoes(event):
     valor_digitado = menu_botao.get()
-    if valor_digitado == '':
-        sugestoes = botoes
-    else:
-        sugestoes = [botao for botao in botoes if valor_digitado.lower() in botao.lower()]
+    sugestoes = [botao for botao in all_categories if valor_digitado.lower() in botao.lower()]
     menu_botao['values'] = sugestoes
 
 def validar_float(entrada):
@@ -49,10 +46,9 @@ def ordenar_por_coluna(tree, col, reverse):
     # Alterna entre ordenação crescente e decrescente
     tree.heading(col, command=lambda: ordenar_por_coluna(tree, col, not reverse))
 
-
 # Função para buscar POIs
-def get_pois(lat, lon, api_key, categories, radius):
-    pois_url = f"https://api.geoapify.com/v2/places?categories={categories}&filter=circle:{lon},{lat},{radius}&bias=proximity:{lon},{lat}&apiKey={api_key}"
+def get_pois(lat, lon, api_key, categories, radius,limit):
+    pois_url = f"https://api.geoapify.com/v2/places?categories={categories}&filter=circle:{lon},{lat},{radius}&bias=proximity:{lon},{lat}&limit={limit}&apiKey={api_key}"
     response = requests.get(pois_url)
     return response.json()
 
@@ -67,20 +63,24 @@ def salvar_como_csv():
 
 # Função chamada quando o botão 'Buscar' é pressionado
 def buscar_pois():
+    
     lat_str = lat_entry.get()
     lon_str = lon_entry.get()
     radius_str = radius_entry.get()
+    limit_str=Limit.get()
 
-    if not (validar_float(lat_str) and validar_float(lon_str) and validar_float(radius_str)):
-        messagebox.showerror("Erro de entrada", "Por favor, insira números válidos para latitude, longitude e raio.")
+    if not (validar_float(lat_str) and validar_float(lon_str) and validar_float(radius_str) and validar_float(limit_str)):
+        messagebox.showerror("Erro de entrada", "Por favor, insira números válidos para latitude, longitude, limite e raio.")
         return
-
+    root.config(cursor="watch")
+    root.update()
     lat = float(lat_str)
     lon = float(lon_str)
+    limit = limit_str
     radius = float(radius_str) * 1000
     categories = ','.join([lista_box.get(i) for i in range(lista_box.size())])
 
-    pois = get_pois(lat, lon, api_key, categories, radius)
+    pois = get_pois(lat, lon, api_key, categories, radius,limit)
 
     # Processando os dados recebidos
     data = []
@@ -102,6 +102,8 @@ def buscar_pois():
         tree.delete(i)
     for row in data:
         tree.insert('', 'end', values=row)
+    root.config(cursor="")
+    root.update()
 
 # Configuração da janela principal
 root = tk.Tk()
@@ -126,6 +128,10 @@ lon_entry.pack(side='left', padx=(0, 10))
 tk.Label(entry_frame, text="Raio (km):").pack(side='left')
 radius_entry = tk.Entry(entry_frame)
 radius_entry.pack(side='left', padx=(0, 10))
+
+tk.Label(entry_frame, text="Limite de pesquisas:").pack(side='left')
+Limit = tk.Entry(entry_frame)
+Limit.pack(side='left', padx=(0, 10))
 
 # Menu de cascata para botões
 menu_botao = ttk.Combobox(entry_frame, values=all_categories, width=47)
