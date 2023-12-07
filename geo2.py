@@ -97,10 +97,7 @@ def buscar_locations():
         messagebox.showerror("Erro de entrada", "Por favor, insira números válidos para latitude, longitude, limite e raio.")
         return
 
-    #Definir o mouse como icone de loading
-    root.config(cursor="watch")
-    root.update()
-
+    
     #Setar os valores
     lat = float(lat_str)
     lon = float(lon_str)
@@ -108,6 +105,13 @@ def buscar_locations():
     radius = float(radius_str) * 1000
     categories = ','.join([lista_box.get(i) for i in range(lista_box.size())])
 
+    if categories=="":
+        messagebox.showerror("Erro de entrada", "Por favor, insira as categorias.")
+        return
+
+    #Definir o mouse como icone de loading
+    root.config(cursor="watch")
+    root.update()
 
     locations = get_locations(lat, lon, api_key, categories, radius,limit)
 
