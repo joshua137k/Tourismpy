@@ -29,6 +29,14 @@ class App:
 		self.table = Table(self.dic, 0, 200, 80, 30)
 		
 	def salvar(self):
+
+
+		if self.dic["name"]==[]:
+			self.PopUpText="Erro. Sem dados para guardar"
+			self.popUp.visible=True
+			return
+
+
 		if self.textboxes[4].text=="":
 			self.PopUpText="Erro de entrada. Por favor, insira um nome."
 			self.popUp.visible=True
@@ -71,15 +79,15 @@ class App:
 		if n not in self.lst:
 			self.lst.append(n)
 
+
 	def remLst(self,n,i):
 		if n in self.lst:
 			self.lst.remove(n)
 			i.filter_items("")
 
+
 	def printLst(self):
 		print(self.lst)
-
-
 
 
 	def run(self):

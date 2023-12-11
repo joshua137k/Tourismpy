@@ -149,7 +149,7 @@ def buscar_locations():
 root = tk.Tk()
 root.title("JTurism")
 root.geometry("800x600")  # Define um tamanho inicial
-root.attributes('-zoomed', True)
+#root.attributes('-zoomed', True) não funciona no windows
 
 # Minha api
 api_key = "21b87e0e53674c85a76c2a2d2a400632"
