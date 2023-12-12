@@ -1,3 +1,4 @@
 pandas
 tkinter
 request
+openpyxl

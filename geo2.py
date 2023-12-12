@@ -120,9 +120,12 @@ def buscar_locations():
     root.update()
 
     locations = get_locations(lat, lon, api_key, categories, radius,limit)
-
+    if locations["features"]==[]:
+        messagebox.showerror("Não foi encontrado nada no raio dado.")
+        return
     # Processando os dados recebidos
     data = []
+    print(locations)
     #Pegar as informações importantes
     for feature in locations['features']:
         properties = feature['properties']
@@ -142,7 +145,6 @@ def buscar_locations():
             properties.get('lat', ''),
             properties.get('lon', ''),
         ])
-
     # Atualizando o Treeview
     for i in tree.get_children():
         tree.delete(i)

@@ -58,6 +58,7 @@ class App:
 			return
 
 		pygame.mouse.set_cursor(*pygame.cursors.diamond)
+		self.dic = {"name":[],"distance":[],"country":[],"city":[],"street":[],"lat":[],"lon":[],"entidade":[],"GMT":[],"Currency":[]}
 
 		push(self.textboxes[0].text,self.textboxes[1].text,self.lst,self.textboxes[2].text,self.textboxes[3].text,self.dic)
 		self.table.updateDada(self.dic)
