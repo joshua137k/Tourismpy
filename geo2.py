@@ -12,6 +12,15 @@ all_categories = [i.strip() for i in f]
 f.close()
 
 
+
+#Pegar as moedas
+f = open("moedas.txt","r")
+teste = eval(f.read())
+all_moedas = {i.lower():teste[i] for i in teste}
+teste=0
+f.close()
+
+
 #Adicionar categoria a lista
 def AddToList(nome):
     items = [lista_box.get(i) for i in range(lista_box.size())]
@@ -57,12 +66,8 @@ def SortedColumm(tree, col, reverse):
 
 
 def get_moeda(nome):
-    response = requests.get("https://restcountries.com/v3.1/name/"+nome)
-    a=response.json()[0]["currencies"]
-    
-    b = list( a.keys() )[0]
-
-    return a[b]["name"]
+    nome=nome.lower()
+    return all_moedas.get(nome,"not find")
 
 # Função para buscar as localizações
 def get_locations(lat, lon, api_key, categories, radius,limit):
@@ -80,6 +85,7 @@ def get_moreDetails(nome,key):
 def salvar_como_csv():
     data = [tree.item(item)['values'] for item in tree.get_children()]
     df = pd.DataFrame(data, columns=columns)
+    df.sort_values(by="distance")
     filepath = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
     if filepath:
         df.to_csv(filepath, index=False, encoding='utf-8-sig')
