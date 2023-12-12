@@ -125,4 +125,4 @@ print(df.to_string(index=False))
 print("O numero de resultados foi: ",str(len(dic["name"])))
 # Salvando o DataFrame em um arquivo Excel
 df.sort_values(by="distance")
-df.to_excel(verify("Nome do arquivo",str)+".xlsx", index=False)
+df.to_csv(verify("Nome do arquivo",str)+".csv", index=False)

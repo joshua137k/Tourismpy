@@ -131,16 +131,17 @@ def buscar_locations():
         properties = feature['properties']
         name = properties.get('name', 'NONAME')
         country=properties.get('country', '')
+        city = properties.get('city', '')
         if name =="NONAME":
             continue
         data.append([
             name,
             float(properties.get('distance', 0)) / 1000,
             country,
-            properties.get('city', ''),
+            city,
             properties.get('street', ''),
             properties["datasource"]["raw"].get("shop","")+properties["datasource"]["raw"].get("amenity","")+properties["datasource"]["raw"].get("tourism",""),
-            get_moreDetails(country,api_key)['results'][0].get("timezone").get("offset_STD"),
+            get_moreDetails(city,api_key)['results'][0].get("timezone").get("offset_STD"),
             get_moeda(country),
             properties.get('lat', ''),
             properties.get('lon', ''),
