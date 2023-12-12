@@ -10,12 +10,7 @@ def get_moreDetails(nome,key):
 
 
 def get_moeda(nome):
-    response = requests.get("https://restcountries.com/v3.1/name/"+nome)
-    a=response.json()[0]["currencies"]
-    
-    b = list( a.keys() )[0]
-
-    return a[b]["name"]
+    return ".."
 
 #Conseguir as localizações dos pontos perto de você
 def get_locations(lat, lon, api_key, categories,radious,limit):
