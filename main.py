@@ -117,12 +117,13 @@ chaves_desejadas = list(dic.keys())
 organiza = inCategorie(verify("Escolha o metodo de organizar: "+str(chaves_desejadas),str),chaves_desejadas).split(",")
 
 df = pd.DataFrame(dic)
-df.sort_values(by=organiza)
+print(organiza)
+df = df.sort_values(by=organiza)
 
 #printar a tabela
 print(df.to_string(index=False))
 
 print("O numero de resultados foi: ",str(len(dic["name"])))
 # Salvando o DataFrame em um arquivo Excel
-df.sort_values(by="distance")
+df = df.sort_values(by="distance")
 df.to_csv(verify("Nome do arquivo",str)+".csv", index=False)

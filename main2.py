@@ -125,7 +125,6 @@ def buscar_locations():
         return
     # Processando os dados recebidos
     data = []
-    print(locations)
     #Pegar as informações importantes
     for feature in locations['features']:
         properties = feature['properties']

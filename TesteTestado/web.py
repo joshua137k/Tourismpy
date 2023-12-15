@@ -66,7 +66,7 @@ def push(latitude,longitude,categorias,radious,limit,dic):
     longitude=float(longitude)
     radious=float(radious)*1000
     limit=float(limit)
-    categorias="".join(categorias)
+    categorias=",".join(categorias)
     
     #Chamar as funções para receber o dicionario com as localizações
     locations = get_locations(latitude, longitude, api_key, categorias,radious,limit)
